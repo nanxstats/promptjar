@@ -9,8 +9,8 @@ editor is the UI.
 ## 1. Philosophy
 
 - **Markdown Database Pattern.** Directory = project, file = thread,
-  frontmatter = metadata, `---` thematic break = record separator. The archive
-  stays fully usable without `ptj`.
+  frontmatter = metadata, `---` thematic break = record separator.
+  The archive stays fully usable without `ptj`.
 - **Suckless constraints.** Do one thing. No config file, no daemon, no cache,
   no index, no lock-in. Every invocation scans the tree; at hundreds to low
   thousands of files a full scan in Rust is milliseconds. Correctness and
