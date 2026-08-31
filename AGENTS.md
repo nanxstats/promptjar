@@ -4,7 +4,7 @@ This file is guidance for coding agents working on `promptjar` itself.
 `SPEC.md` is the source of truth for behavior, output formats, lint rules,
 and exit codes. Read it in full before changing behavior; if this file
 disagrees with it, follow `SPEC.md`. Its "Questions" section records how
-ambiguous edges were resolved — extend it instead of silently choosing when
+ambiguous edges were resolved: extend it instead of silently choosing when
 you hit a new one.
 
 ## Project boundary

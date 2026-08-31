@@ -3,20 +3,21 @@
 [![crates.io](https://img.shields.io/crates/v/promptjar.svg)](https://crates.io/crates/promptjar)
 [![CI tests](https://github.com/nanxstats/promptjar/actions/workflows/ci.yml/badge.svg)](https://github.com/nanxstats/promptjar/actions/workflows/ci.yml)
 
-promptjar treats a Git repo of Markdown prompt archives as a queryable
-database. It follows the Markdown Database Pattern: a directory is a table
-(project), a file is a row (thread), YAML frontmatter holds the columns, and
-`---` thematic breaks separate individual prompts (records) within a thread.
+promptjar treats a Git repo of Markdown prompt archives as a queryable database.
+It follows the Markdown Database Pattern: a directory is a table (project),
+a file is a row (thread), YAML frontmatter holds the columns, and `---`
+thematic breaks separate individual prompts (records) within a thread.
+
 In the suckless spirit it does one thing and composes with Unix tools: no
 config file, no daemon, no index, no cache, no lock-in. Git is the write
-layer, your editor is the UI, and `ptj` is the read/query layer — every
+layer, your editor is the UI, and `ptj` is the read/query layer: every
 invocation is a stateless scan of the tree, which in Rust takes milliseconds
 at the scale of a personal archive.
 
 ## Installation
 
-Installing the `promptjar` crate gives you the `ptj` command (the
-ripgrep → `rg` convention):
+Installing the `promptjar` crate gives you the `ptj` command
+(the ripgrep -> `rg` convention):
 
 ```sh
 cargo install promptjar
