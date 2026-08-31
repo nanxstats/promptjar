@@ -12,15 +12,15 @@ you hit a new one.
 `ptj` is the read/query layer over a Git repo of Markdown prompt archives.
 Git is the write layer and the editor is the UI. Keep these invariants:
 
-- `new` is the only command that writes, and it only creates files. Never
-  add a command that edits an existing file.
-- No index, no cache, no config file, no daemon. Every invocation scans the
-  tree. Behavior is controlled by flags plus exactly two environment
-  variables: `PROMPTJAR_ROOT` and `PROMPTJAR_MODEL`.
+- `new` is the only command that writes, and it only creates files.
+  Never add a command that edits an existing file.
+- No index, no cache, no config file, no daemon. Every invocation scans the tree.
+  Behavior is controlled by flags plus exactly two environment variables:
+  `PROMPTJAR_ROOT` and `PROMPTJAR_MODEL`.
 - Default output is undecorated TSV; `--json` is JSON Lines. Never emit
   ANSI escape sequences anywhere, so there is nothing to detect or strip.
-- No full-text search, TUI, server, embeddings, or SQLite in v1. `export
-  --sqlite` behind a cargo feature is the only anticipated extension.
+- No full-text search, TUI, server, embeddings, or SQLite in v1.
+  `export --sqlite` behind a cargo feature is the only anticipated extension.
 - Read commands must never silently drop data: files with invalid
   frontmatter are skipped with a warning on stderr, and `lint` is the tool
   that explains them.
@@ -99,8 +99,7 @@ Frontmatter and body are handled by two deliberately different mechanisms:
 - Do not add a nested `.gitignore` to the fixture archive: files it hides
   would need `git add -f` and `cargo package` would drop them from the
   published crate. The `ignore` crate's gitignore handling is upstream's
-  responsibility; our tests cover hidden-directory and non-Markdown
-  skipping.
+  responsibility; our tests cover hidden-directory and non-Markdown skipping.
 
 ## Working conventions
 
