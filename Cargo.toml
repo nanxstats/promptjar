@@ -16,11 +16,11 @@ exclude = ["AGENTS.md", "SPEC.md", "okr.toml", "okr.lock", "deps-src/"]
 name = "ptj"
 path = "src/main.rs"
 
-# See SPEC.md section 8 for the one-line justification of each dependency.
+# See SPEC.md section 8 for the justification of each dependency
 [dependencies]
 anyhow = "1.0.104"
 clap = { version = "4.6.6", features = ["derive"] }
-ignore = "0.4.29"
+ignore = "0.4.33"
 jiff = "0.2.35"
 pulldown-cmark = { version = "0.13.4", default-features = false }
 saphyr = "0.0.12"
