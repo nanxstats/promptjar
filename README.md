@@ -66,8 +66,8 @@ $ ptj stats --by month
 $ ptj lint
 README.md:1: warning: no YAML frontmatter; not a thread
 
-$ PROMPTJAR_MODEL='Claude Fable 5 Extra' ptj new gsdesign blog
-gsdesign/blog.md
+$ PROMPTJAR_MODEL='Claude Fable 5 Extra' ptj new bisectrunk blog
+bisectrunk/blog.md
 ```
 
 Default output is TSV with a stable column order and no decoration; add
@@ -97,7 +97,7 @@ promptjar has no full-text search on purpose; ripgrep already does it.
 Lint only the threads that mention a topic:
 
 ```sh
-rg -l 'group sequential' | xargs ptj lint
+rg -l 'changed a result' | xargs ptj lint
 ```
 
 Words archived per month, as a table:

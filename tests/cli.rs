@@ -31,7 +31,7 @@ fn ptj_at(root: &Path) -> Command {
 
 const LIST_TSV: &str = "\
 2026-06-30\trevdeprun\trevdeprun/prompts.md\tClaude Fable 5 Extra\t1\t5
-2026-07-21\tgsdesign\tgsdesign/blog.md\tGPT-5.6 Sol Pro\t2\t49
+2026-07-21\tbisectrunk\tbisectrunk/blog.md\tGPT-5.6 Sol Pro\t2\t58
 2026-08-08\tokr\tokr/lockfile.md\tClaude Fable 5 Extra, GPT-5.6 Sol Pro\t2\t12
 2026-08-11\tokr\tokr/prompts.md\tClaude Fable 5 Extra\t3\t20
 ";
@@ -55,8 +55,8 @@ fn list_records_with_model_filter() {
         .success()
         .stdout(
             "\
-2026-07-21\tgsdesign\tgsdesign/blog.md\t1\tGPT-5.6 Sol Pro\t41
-2026-07-21\tgsdesign\tgsdesign/blog.md\t2\tGPT-5.6 Sol Pro\t8
+2026-07-21\tbisectrunk\tbisectrunk/blog.md\t1\tGPT-5.6 Sol Pro\t50
+2026-07-21\tbisectrunk\tbisectrunk/blog.md\t2\tGPT-5.6 Sol Pro\t8
 2026-08-08\tokr\tokr/lockfile.md\t1\tClaude Fable 5 Extra, GPT-5.6 Sol Pro\t6
 2026-08-08\tokr\tokr/lockfile.md\t2\tClaude Fable 5 Extra, GPT-5.6 Sol Pro\t6
 ",
@@ -101,7 +101,7 @@ fn list_json_rows_parse() {
 #[test]
 fn show_prints_a_single_record() {
     ptj()
-        .args(["show", "gsdesign/blog.md:2"])
+        .args(["show", "bisectrunk/blog.md:2"])
         .assert()
         .success()
         .stdout("Second prompt: summarize the post in one paragraph.\n");
@@ -110,7 +110,7 @@ fn show_prints_a_single_record() {
 #[test]
 fn show_prints_the_whole_body_without_frontmatter() {
     ptj()
-        .args(["show", "gsdesign/blog.md"])
+        .args(["show", "bisectrunk/blog.md"])
         .assert()
         .success()
         .stdout(predicate::str::starts_with("Outline a blog post"))
@@ -162,7 +162,7 @@ fn stats_by_project() {
         .args(["stats", "--by", "project"])
         .assert()
         .success()
-        .stdout("gsdesign\t1\nokr\t2\nrevdeprun\t1\n");
+        .stdout("bisectrunk\t1\nokr\t2\nrevdeprun\t1\n");
 }
 
 #[test]

@@ -3,7 +3,7 @@ date: 2026-07-21
 model: GPT-5.6 Sol Pro
 ---
 
-Outline a blog post on group sequential design.
+Outline a blog post on bisectrunk, an Rust CLI for finding the commit that changed a result.
 
 The frontmatter convention
 ---
