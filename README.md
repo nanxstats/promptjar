@@ -4,7 +4,7 @@
 [![CI tests](https://github.com/nanxstats/promptjar/actions/workflows/ci.yml/badge.svg)](https://github.com/nanxstats/promptjar/actions/workflows/ci.yml)
 
 promptjar treats a Git repo of Markdown prompt archives as a queryable database.
-It follows the Markdown Database Pattern: a directory is a table (project),
+It follows the Markdown database pattern: a directory is a table (project),
 a file is a row (thread), YAML frontmatter holds the columns, and `---`
 thematic breaks separate individual prompts (records) within a thread.
 

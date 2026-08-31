@@ -8,7 +8,7 @@ editor is the UI.
 
 ## 1. Philosophy
 
-- **Markdown Database Pattern.** Directory = project, file = thread,
+- **Markdown database pattern.** Directory = project, file = thread,
   frontmatter = metadata, `---` thematic break = record separator.
   The archive stays fully usable without `ptj`.
 - **Suckless constraints.** Do one thing. No config file, no daemon, no cache,
