@@ -16,12 +16,20 @@ at the scale of a personal archive.
 
 ## Installation
 
-Installing the `promptjar` crate gives you the `ptj` command
-(the ripgrep -> `rg` convention):
+Install with Homebrew:
 
-```sh
+```console
+brew install nanxstats/tap/promptjar
+```
+
+Or with Cargo:
+
+```console
 cargo install promptjar
 ```
+
+Installing the `promptjar` crate gives you the `ptj` command
+(the ripgrep -> `rg` convention).
 
 ## Quickstart
 
