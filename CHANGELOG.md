@@ -1,6 +1,6 @@
 # Changelog
 
-## promptjar (development version)
+## promptjar 0.2.0
 
 ### Breaking changes
 
