@@ -1,4 +1,4 @@
-//! Core library for `ptj`, the promptjar CLI.
+//! Core library for `pj`, the promptjar CLI.
 //!
 //! A Git repository of Markdown prompt archives is treated as a queryable
 //! database: directory = project, file = thread, YAML frontmatter = thread

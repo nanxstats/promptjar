@@ -1,5 +1,12 @@
 # Changelog
 
+## promptjar (development version)
+
+### Breaking changes
+
+- Rename the CLI binary from `ptj` to `pj`. Scripts, aliases, and CI steps
+  that call `ptj` need to be updated (#5).
+
 ## promptjar 0.1.0
 
 ### New features

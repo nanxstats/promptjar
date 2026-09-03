@@ -1,23 +1,23 @@
 # promptjar design specification
 
-`promptjar` (binary: `ptj`) treats a Git repository of Markdown prompt
+`promptjar` (binary: `pj`) treats a Git repository of Markdown prompt
 archives as a queryable database. The repository is the database, directories
 are tables, files are rows of threads, and YAML frontmatter supplies the
-columns. `ptj` is the read/query layer; Git is the write layer and the text
+columns. `pj` is the read/query layer; Git is the write layer and the text
 editor is the UI.
 
 ## 1. Philosophy
 
 - **Markdown database pattern.** Directory = project, file = thread,
   frontmatter = metadata, `---` thematic break = record separator.
-  The archive stays fully usable without `ptj`.
+  The archive stays fully usable without `pj`.
 - **Suckless constraints.** Do one thing. No config file, no daemon, no cache,
   no index, no lock-in. Every invocation scans the tree; at hundreds to low
   thousands of files a full scan in Rust is milliseconds. Correctness and
   statelessness beat speed.
 - **Composability.** Default output is TSV with a stable column order, one row
   per item, and no decoration, so `awk`, `sort`, `cut`, and `xsv`/`qsv` work
-  directly. `--json` switches to JSON Lines. `ptj` never emits ANSI escape
+  directly. `--json` switches to JSON Lines. `pj` never emits ANSI escape
   sequences anywhere; there is nothing to strip in a pipe.
 - **Read-mostly.** The only command that writes is `new`, and it only creates
   files. No command ever edits an existing file in v1.
@@ -93,21 +93,21 @@ are `PROMPTJAR_ROOT` (root override) and `PROMPTJAR_MODEL` (default model for
 ## 5. CLI reference
 
 ```
-ptj list [--records] [--project P] [--model M] [--since DATE] [--until DATE] [--json]
-ptj show PROJECT/FILE.md[:N]
-ptj stats [--by model|project|month|year] [--records] [--json]
-ptj lint [--strict] [PATHS...]
-ptj new PROJECT [NAME] [--model M] [--date DATE]
-ptj export [--json]
+pj list [--records] [--project P] [--model M] [--since DATE] [--until DATE] [--json]
+pj show PROJECT/FILE.md[:N]
+pj stats [--by model|project|month|year] [--records] [--json]
+pj lint [--strict] [PATHS...]
+pj new PROJECT [NAME] [--model M] [--date DATE]
+pj export [--json]
 ```
 
-### 5.1 `ptj list`
+### 5.1 `pj list`
 
 One row per thread. TSV columns: `date`, `project`, `file`, `models`
 (comma-joined), `n_records`, `words`.
 
 ```console
-$ ptj list
+$ pj list
 2026-08-08	okr	okr/lockfile.md	Claude Fable 5 Extra, GPT-5.6 Sol Pro	2	310
 2026-08-11	okr	okr/prompts.md	Claude Fable 5 Extra	3	1289
 ```
@@ -131,14 +131,14 @@ Filters (combined with AND):
 {"date":"2026-08-11","project":"okr","file":"okr/prompts.md","record":2,"address":"okr/prompts.md:2","models":["Claude Fable 5 Extra"],"words":210}
 ```
 
-### 5.2 `ptj show`
+### 5.2 `pj show`
 
-`ptj show okr/prompts.md` prints the whole file body (frontmatter stripped,
-separators kept). `ptj show okr/prompts.md:2` prints only record 2. The path
+`pj show okr/prompts.md` prints the whole file body (frontmatter stripped,
+separators kept). `pj show okr/prompts.md:2` prints only record 2. The path
 is relative to the repository root. Errors: file missing, file is not a
 thread, index out of range. Output always ends with exactly one newline.
 
-### 5.3 `ptj stats`
+### 5.3 `pj stats`
 
 Counts grouped by one dimension: `--by model` (default), `project`, `month`
 (`YYYY-MM` from `date`), or `year`. TSV columns: `key`, `count`.
@@ -149,10 +149,10 @@ mirroring `list --records`. When a thread lists multiple models, it counts
 exceed the number of threads.
 
 ```console
-$ ptj stats
+$ pj stats
 Claude Fable 5 Extra	12
 GPT-5.6 Sol Pro	3
-$ ptj stats --by month --records
+$ pj stats --by month --records
 2026-07	21
 2026-08	48
 ```
@@ -160,11 +160,11 @@ $ ptj stats --by month --records
 Rows sort by key in byte order; pipe through `sort -t'	' -k2 -rn` for
 count order. `--json` emits `{"key":"...","count":N}` lines.
 
-### 5.4 `ptj lint`
+### 5.4 `pj lint`
 
 Validates the archive (or only `PATHS...`, which may be files or
 directories; non-Markdown files passed explicitly are ignored, so `rg -l PAT
-| xargs ptj lint` is safe). Diagnostics are `path:line: severity: message`,
+| xargs pj lint` is safe). Diagnostics are `path:line: severity: message`,
 one per line on stdout, suitable for editors and CI. No summary line.
 
 Errors (exit 1):
@@ -176,7 +176,7 @@ Errors (exit 1):
 | Frontmatter is not a YAML mapping | line 1 |
 | Missing or invalid `date` (not a `YYYY-MM-DD` string) | the `date:` line, else line 1 |
 | Missing or empty `model` (or non-string entries) | the `model:` line, else line 1 |
-| Frontmatter not at byte 0 (e.g. leading blank line) | the displaced `---` line |
+| Frontmatter not at byte 0 (for example, leading blank line) | the displaced `---` line |
 
 Warnings (exit 0 unless `--strict`):
 
@@ -189,9 +189,9 @@ Warnings (exit 0 unless `--strict`):
 Exit codes: `0` clean (or warnings without `--strict`), `1` any error, or any
 warning under `--strict`, `2` usage error.
 
-### 5.5 `ptj new`
+### 5.5 `pj new`
 
-`ptj new PROJECT [NAME]` creates `ROOT/PROJECT/NAME.md` (default `NAME` is
+`pj new PROJECT [NAME]` creates `ROOT/PROJECT/NAME.md` (default `NAME` is
 `prompts`; a missing `.md` extension is appended) with frontmatter:
 
 ```yaml
@@ -210,7 +210,7 @@ model: Claude Fable 5 Extra
 - Refuses to overwrite an existing file. Prints the created path (relative to
   the current directory when possible) on stdout.
 
-### 5.6 `ptj export`
+### 5.6 `pj export`
 
 Full structured dump: JSON Lines, one record per line, always (the `--json`
 flag is accepted for symmetry and changes nothing). Each line:
@@ -245,7 +245,7 @@ to JSON with keys in sorted order (see Questions).
 
 The body (everything after the closing delimiter) is parsed with
 `pulldown-cmark` (CommonMark, no extensions). A record boundary is an
-`Event::Rule` that is (a) at the top level, i.e. not nested inside any
+`Event::Rule` that is (a) at the top level, that is, not nested inside any
 container such as a block quote or list item, and (b) *dash-style*: its
 source text consists only of `-`, spaces, and tabs. Consequences, matching
 CommonMark semantics:

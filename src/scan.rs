@@ -114,7 +114,7 @@ pub fn scan_threads(root: &Path) -> Vec<Thread> {
             Some(t) => threads.push(t),
             None if file.parsed.has_errors() => {
                 eprintln!(
-                    "warning: skipping {}: invalid thread (run `ptj lint` for details)",
+                    "warning: skipping {}: invalid thread (run `pj lint` for details)",
                     file.rel
                 );
             }
