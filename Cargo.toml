@@ -13,7 +13,7 @@ authors = ["Nan Xiao <me@nanx.me>"]
 exclude = ["AGENTS.md", "SPEC.md", "okr.toml", "okr.lock", "deps-src/"]
 
 [[bin]]
-name = "ptj"
+name = "pj"
 path = "src/main.rs"
 
 # See SPEC.md section 8 for the justification of each dependency

@@ -9,7 +9,7 @@ you hit a new one.
 
 ## Project boundary
 
-`ptj` is the read/query layer over a Git repo of Markdown prompt archives.
+`pj` is the read/query layer over a Git repo of Markdown prompt archives.
 Git is the write layer and the editor is the UI. Keep these invariants:
 
 - `new` is the only command that writes, and it only creates files.
@@ -76,7 +76,7 @@ Frontmatter and body are handled by two deliberately different mechanisms:
   (date, path), stats keys by byte order. Tests assert exact TSV output.
 - TSV fields pass through `output::sanitize_tsv`; record text is only ever
   emitted as JSON.
-- A broken pipe (`ptj list | head`) exits 0; `cli::run` downcasts the
+- A broken pipe (`pj list | head`) exits 0; `cli::run` downcasts the
   `io::Error` rather than letting it print as a failure. Use `writeln!` to
   a locked, buffered stdout in commands, never `println!` in loops.
 - Exit codes: 0 success, 1 runtime failure or lint findings, 2 clap usage

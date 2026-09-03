@@ -1,4 +1,4 @@
-//! The `ptj` command surface and command implementations. `main.rs` stays
+//! The `pj` command surface and command implementations. `main.rs` stays
 //! thin: it calls [`run`] and exits with the returned code.
 
 use std::collections::BTreeMap;
@@ -14,7 +14,7 @@ use crate::{Thread, frontmatter, output, scan};
 
 #[derive(Parser)]
 #[command(
-    name = "ptj",
+    name = "pj",
     version,
     about = "Query a Git repo of Markdown prompt archives like a database"
 )]
@@ -110,15 +110,15 @@ pub fn run() -> i32 {
     match dispatch(Cli::parse()) {
         Ok(code) => code,
         Err(err) => {
-            // A closed pipe (e.g. `ptj list | head`) is a normal way for a
-            // consumer to stop reading, not an error.
+            // A closed pipe (for example, `pj list | head`) is a normal way
+            // for a consumer to stop reading, not an error.
             if err
                 .downcast_ref::<std::io::Error>()
                 .is_some_and(|io| io.kind() == std::io::ErrorKind::BrokenPipe)
             {
                 return 0;
             }
-            eprintln!("ptj: {err:#}");
+            eprintln!("pj: {err:#}");
             1
         }
     }
@@ -359,7 +359,7 @@ fn cmd_lint(strict: bool, paths: &[PathBuf]) -> Result<i32> {
                 files.extend(scan::walk_md(p));
             } else if p.extension().is_some_and(|x| x == "md") {
                 // Non-Markdown paths passed explicitly are attachments;
-                // ignore them so `rg -l PAT | xargs ptj lint` is safe.
+                // ignore them so `rg -l PAT | xargs pj lint` is safe.
                 files.push(p.clone());
             }
         }
